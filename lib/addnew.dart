@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'package:page_route_transition/page_route_transition.dart';
 
 class AddNew extends StatefulWidget {
   const AddNew({Key? key, required this.containerLists}) : super(key: key);
@@ -20,7 +21,7 @@ class _AddNewState extends State<AddNew> {
 
   @override
   void initState() {
-    realContainerLists = widget.containerLists;
+    realContainerLists = List.from(widget.containerLists);
     super.initState();
   }
 
@@ -29,13 +30,13 @@ class _AddNewState extends State<AddNew> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color(0xFF06283D),
+        backgroundColor: const Color(0xFF06283D),
         body: Column(
           children: [
             Container(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text('FITSHARE',style: TextStyle(fontFamily: 'Mrs. Monster',fontSize: 40,color: Colors.white),
                 ),
               ],
@@ -43,14 +44,14 @@ class _AddNewState extends State<AddNew> {
             Container(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text('Movement Name',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                 ),
               ],
             ),
             Container(height: 10),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 8,horizontal: 100),
+              margin: const EdgeInsets.symmetric(vertical: 8,horizontal: 100),
               //width: 185,
               height: 40,
               decoration: BoxDecoration(
@@ -63,11 +64,11 @@ class _AddNewState extends State<AddNew> {
                     moveName = text;
                   },
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none
 
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
@@ -78,17 +79,17 @@ class _AddNewState extends State<AddNew> {
             Row(
               children: [
                 Container(width: 25,),
-                Text('Weight',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
+                const Text('Weight',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
                 Container(width: 113,),
-                Text('Set',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
+                const Text('Set',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
                 Container(width: 70,),
-                Text('Rep',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
+                const Text('Rep',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
               ],
             ),
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 13,top: 10),
+                  margin: const EdgeInsets.only(left: 13,top: 10),
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
@@ -101,11 +102,11 @@ class _AddNewState extends State<AddNew> {
                         weight = text;
                       },
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none
 
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -114,7 +115,7 @@ class _AddNewState extends State<AddNew> {
                 ),
                 Container(width:50,),
                 Container(
-                  margin: EdgeInsets.only(left: 13,top: 10),
+                  margin: const EdgeInsets.only(left: 13,top: 10),
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
@@ -127,11 +128,11 @@ class _AddNewState extends State<AddNew> {
                         set = text;
                       },
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none
 
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -139,7 +140,7 @@ class _AddNewState extends State<AddNew> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 13,top: 10),
+                  margin: const EdgeInsets.only(left: 13,top: 10),
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
@@ -152,11 +153,11 @@ class _AddNewState extends State<AddNew> {
                         rep = text;
                       },
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none
 
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -174,14 +175,14 @@ class _AddNewState extends State<AddNew> {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 30,left: 10),
+                  margin: const EdgeInsets.only(bottom: 30,left: 10),
                   child: GestureDetector(child: Image.asset('images/addbutton.png'),onTap: () {
                     if(moveName != '' && weight != '' && set != '' && rep != '') {
                       moves.add({'moveName':moveName,'weight':weight,'set':set,'rep':rep});
                       setState(() {
                         realContainerLists.add(
                             Container(
-                              margin: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+                              margin: const EdgeInsets.symmetric(vertical: 8,horizontal: 15),
                               width: 165,
                               height: 80,
                               decoration: BoxDecoration(
@@ -191,7 +192,7 @@ class _AddNewState extends State<AddNew> {
                               child: Center(
                                 child: Text(
                                   'Weight: ${weight}Kg  Sets:${set} Rep:${rep}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -202,11 +203,11 @@ class _AddNewState extends State<AddNew> {
                       });
                     }else {
                       showDialog(context: this.context, builder: (ctx) => AlertDialog(
-                        title: Text("You have to fill in all the blanks."),
+                        title: const Text("You have to fill in all the blanks."),
                         actions: [
                           TextButton(onPressed: (){
                             Navigator.of(ctx).pop();
-                          }, child: Text('Ok')),
+                          }, child: const Text('Ok')),
                         ],
                       ));
                     }
@@ -214,7 +215,7 @@ class _AddNewState extends State<AddNew> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 30,left: 20),
+                  margin: const EdgeInsets.only(bottom: 30,left: 20),
                   child: GestureDetector(child: Image.asset('images/savebutton.png'),onTap: () async {
 
                     await MovesNamesDatabaseHelper.instance.add(
@@ -228,10 +229,8 @@ class _AddNewState extends State<AddNew> {
                       );
                     }
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MyApp()),
-                    );
+                    PageRouteTransition.effect = TransitionEffect.fade;
+                    PageRouteTransition.push(context, const MyApp());
 
                   },
                   ),

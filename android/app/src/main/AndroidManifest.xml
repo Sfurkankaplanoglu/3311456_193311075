@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fitshare">
    <application
-        android:label="fitshare"
+        android:label="FitShare"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

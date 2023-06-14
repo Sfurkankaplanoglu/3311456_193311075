@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "837543260175",
+    "project_id": "fitshare-f949d",
+    "storage_bucket": "fitshare-f949d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837543260175:android:78fd828c0d7dceeb47737a",
+        "android_client_info": {
+          "package_name": "com.furkan.fitshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837543260175-97rhcle7h4drhm6b50umqg4gnu592agc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzxGh5tXLiKV6NARaBm4hSB07GPygzuuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837543260175-97rhcle7h4drhm6b50umqg4gnu592agc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

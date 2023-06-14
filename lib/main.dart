@@ -1,3 +1,12 @@
+import 'dart:async';
+import 'package:fitshare/workouts.dart';
+import 'package:page_route_transition/page_route_transition.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fitshare/graphs.dart';
+import 'package:fitshare/profile.dart';
+import 'package:fitshare/settings.dart';
+import 'package:fitshare/weather.dart';
+import 'package:fitshare/write.dart';
 import 'package:flutter/material.dart';
 import 'addnew.dart';
 import 'addweight.dart';
@@ -5,16 +14,20 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'loginscreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(MaterialApp(
+  await Firebase.initializeApp();
+  runApp(const MaterialApp(
     title: "App",
-    home: MyApp(),
+    home: LoginScreen(),
   ));
+
+
 }
 
 class MyApp extends StatefulWidget {
@@ -26,23 +39,64 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  final _auth = FirebaseAuth.instance;
+  late User loggedInUser;
+
+
+
   @override
   void initState() {
     super.initState();
   }
 
+  void getCurrentUser() async {
+    try{
+      final user = _auth.currentUser;
+      if(user != null){
+        loggedInUser = user;
+      }
+    } catch(e){
+      e.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color(0xFF06283D),
+        backgroundColor: const Color(0xFF06283D),
         body: Column(
           children: [
             Container(height: 40,),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text('FITSHARE',style: TextStyle(fontFamily: 'Mrs. Monster',fontSize: 70,color: Colors.white),
+                GestureDetector(
+                  onTap: (){
+                    PageRouteTransition.effect = TransitionEffect.fade;
+                    PageRouteTransition.push(context, const ProfileScreen());
+                  },
+                  child: Image.asset('images/user.png',width: 40,),
+                ),
+                GestureDetector(
+                  onDoubleTap: (){
+                    showDialog(context: this.context, builder: (ctx) => AlertDialog(
+                      title: const Text("Introducing the ultimate fitness companion - FitShare. Whether you're looking to shed a few pounds, build muscle, or simply improve your overall health, our app has everything you need to reach your fitness goals."),
+                      actions: [
+                        TextButton(onPressed: (){
+                          Navigator.of(ctx).pop();
+                        }, child: const Text('Ok')),
+                      ],
+                    ));
+                  },
+                  child: const Text('FITSHARE',style: TextStyle(fontFamily: 'Mrs. Monster',fontSize: 70,color: Colors.white),)),
+                GestureDetector(
+                  onTap: () {
+                    PageRouteTransition.effect = TransitionEffect.fade;
+                    PageRouteTransition.push(context, const SettingsScreen());
+                  },
+                  child: Image.asset('images/settings.png',width: 40,),
                 ),
               ],
             ),
@@ -50,17 +104,130 @@ class _MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('images/dumbells.png',width: 380,)
+                Image.asset('images/dumbells.png',width: 300,)
               ],),
-            Container(height: 50,),
-            Text('Your Movements',style: TextStyle(color: Colors.white,fontSize: 20),),
+            Container(height: 10,),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Container(width: 5,),
+                  GestureDetector(
+                    onTap: () {
+                      PageRouteTransition.effect = TransitionEffect.fade;
+                      PageRouteTransition.push(context, const WeatherScreen());
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: const Color(0xFF47B5FF)
+                      ),
+                      child: const Center(
+                        child: Text("Weather",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontFamily: 'Mr. Rockwell',
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(width: 5,),
+                  GestureDetector(
+                    onTap: () {
+                      PageRouteTransition.effect = TransitionEffect.fade;
+                      PageRouteTransition.push(context, const GraphsScreen());
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: const Color(0xFF47B5FF)
+                      ),
+                      child: const Center(
+                        child: Text("Graphs",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontFamily: 'Mr. Rockwell',
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(width: 5,),
+                  GestureDetector(
+                    onTap: () {
+                      PageRouteTransition.effect = TransitionEffect.fade;
+                      PageRouteTransition.push(context, const WriteScreen());
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: const Color(0xFF47B5FF)
+                      ),
+                      child: const Center(
+                        child: Text("Write",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontFamily: 'Mr. Rockwell',
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(width: 5,),
+                  GestureDetector(
+                    onTap: () {
+                      PageRouteTransition.effect = TransitionEffect.fade;
+                      PageRouteTransition.push(context, const WorkoutsScreen());
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: const Color(0xFF47B5FF)
+                      ),
+                      child: const Center(
+                        child: Text("Workouts",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontFamily: 'Mr. Rockwell',
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(width: 5,),
+                ],
+              ),
+            ),
+            Container(height: 20,),
+            const Text('Your Movements',style: TextStyle(color: Colors.white,fontSize: 20),),
             Expanded(
               child: FutureBuilder<List<MovesNames>>(
                   future: MovesNamesDatabaseHelper.instance.getMovesNames(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<MovesNames>> snapshot) {
                     if (!snapshot.hasData) {
-                      return Center(child: Text('Lift The Damn Weights Man',textAlign: TextAlign.center,style: TextStyle(
+                      return const Center(child: Text('Lift The Damn Weights Man',textAlign: TextAlign.center,style: TextStyle(
                         fontFamily: 'Mrs. Monster',
                         fontSize: 50,
                         color: Colors.white
@@ -71,7 +238,7 @@ class _MyAppState extends State<MyApp> {
                       children: snapshot.data!.map((moves) {
                         return GestureDetector(
                             child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 8,horizontal: 120),
+                              margin: const EdgeInsets.symmetric(vertical: 8,horizontal: 120),
                               width: 165,
                               height: 40,
                               decoration: BoxDecoration(
@@ -81,7 +248,7 @@ class _MyAppState extends State<MyApp> {
                               child: Center(
                                 child: Text(
                                   moves.theMoveName,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
 
@@ -92,12 +259,12 @@ class _MyAppState extends State<MyApp> {
                             onTap: () {
                               Navigator.push(
                                 this.context,
-                                MaterialPageRoute(builder: (context) => AddWeight(containerLists: [],whichMove: moves.theMoveName)),
+                                MaterialPageRoute(builder: (context) => AddWeight(containerLists: const [],whichMove: moves.theMoveName)),
                               );
                             },
                             onLongPress: () {
                               showDialog(context: this.context, builder: (ctx) => AlertDialog(
-                                title: Text("Do you want to delete it?"),
+                                title: const Text("Do you want to delete it?"),
                                 actions: [
                                   TextButton(onPressed: (){
                                     setState(() {
@@ -106,10 +273,10 @@ class _MyAppState extends State<MyApp> {
                                     });
 
                                     Navigator.of(ctx).pop();
-                                  }, child: Text('yes')),
+                                  }, child: const Text('yes')),
                                   TextButton(onPressed: () {
                                     Navigator.of(ctx).pop();
-                                  }, child: Text('no')),
+                                  }, child: const Text('no')),
                                 ],
                               ));
                             }
@@ -119,12 +286,10 @@ class _MyAppState extends State<MyApp> {
                   }),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 40),
+              margin: const EdgeInsets.only(bottom: 40),
               child: GestureDetector(child: Image.asset('images/addmove.png'),onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddNew(containerLists: [],)),
-                );
+                PageRouteTransition.effect = TransitionEffect.fade;
+                PageRouteTransition.push(context, const AddNew(containerLists: [],));
               },
               ),
             ),
@@ -144,7 +309,7 @@ class Moves{
 
   Moves({this.id,required this.moveName,required this.weight, required this.seta,required this.rep});
 
-  factory Moves.fromMap(Map<String, dynamic> json) => new Moves(
+  factory Moves.fromMap(Map<String, dynamic> json) => Moves(
     id: json["id"],
     moveName: json["moveName"],
     weight: json["weight"],
@@ -170,7 +335,7 @@ class MovesNames{
 
   MovesNames({this.id,required this.theMoveName});
 
-  factory MovesNames.fromMap(Map<String, dynamic> json) => new MovesNames(
+  factory MovesNames.fromMap(Map<String, dynamic> json) => MovesNames(
     id: json["id"],
     theMoveName: json["theMoveName"],
   );

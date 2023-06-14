@@ -24,7 +24,7 @@ class _AddWeightState extends State<AddWeight> {
 
   @override
   void initState() {
-    realContainerLists = widget.containerLists;
+    realContainerLists = List.from(widget.containerLists);
     thisMove = widget.whichMove;
     super.initState();
   }
@@ -33,13 +33,13 @@ class _AddWeightState extends State<AddWeight> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color(0xFF06283D),
+        backgroundColor: const Color(0xFF06283D),
         body: Column(
           children: [
             Container(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text('FITSHARE',style: TextStyle(fontFamily: 'Mrs. Monster',fontSize: 40,color: Colors.white),
                 ),
               ],
@@ -48,7 +48,7 @@ class _AddWeightState extends State<AddWeight> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(thisMove,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white),
+                Text(thisMove,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white),
                 ),
               ],
             ),
@@ -56,17 +56,17 @@ class _AddWeightState extends State<AddWeight> {
             Row(
               children: [
                 Container(width: 25,),
-                Text('Weight',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
+                const Text('Weight',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
                 Container(width: 113,),
-                Text('Set',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
+                const Text('Set',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
                 Container(width: 70,),
-                Text('Rep',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
+                const Text('Rep',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.white),),
               ],
             ),
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 13,top: 10),
+                  margin: const EdgeInsets.only(left: 13,top: 10),
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
@@ -79,11 +79,11 @@ class _AddWeightState extends State<AddWeight> {
                         weight = text;
                       },
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none
 
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -92,7 +92,7 @@ class _AddWeightState extends State<AddWeight> {
                 ),
                 Container(width:50,),
                 Container(
-                  margin: EdgeInsets.only(left: 13,top: 10),
+                  margin: const EdgeInsets.only(left: 13,top: 10),
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
@@ -105,11 +105,11 @@ class _AddWeightState extends State<AddWeight> {
                         set = text;
                       },
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none
 
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -117,7 +117,7 @@ class _AddWeightState extends State<AddWeight> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 13,top: 10),
+                  margin: const EdgeInsets.only(left: 13,top: 10),
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
@@ -130,11 +130,11 @@ class _AddWeightState extends State<AddWeight> {
                         rep = text;
                       },
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none
 
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -149,13 +149,13 @@ class _AddWeightState extends State<AddWeight> {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<Moves>> snapshot) {
                     if (!snapshot.hasData) {
-                      return Center(child: Text('Loading...'));
+                      return const Center(child: Text('Loading...'));
                     }
                     return ListView(
                       children: snapshot.data!.map((moves) {
                         return GestureDetector(
                             child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+                              margin: const EdgeInsets.symmetric(vertical: 8,horizontal: 15),
                               width: 165,
                               height: 80,
                               decoration: BoxDecoration(
@@ -165,7 +165,7 @@ class _AddWeightState extends State<AddWeight> {
                               child: Center(
                                 child: Text(
                                   'Weight: ${moves.weight}Kg  Sets:${moves.seta} Rep:${moves.rep}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -174,17 +174,17 @@ class _AddWeightState extends State<AddWeight> {
                             ),
                             onLongPress: () {
                               showDialog(context: this.context, builder: (ctx) => AlertDialog(
-                                title: Text("Do you want to delete it?"),
+                                title: const Text("Do you want to delete it?"),
                                 actions: [
                                   TextButton(onPressed: (){
                                     setState(() {
                                       DatabaseHelper.instance.removeFromWeights(moves.weight,moves.seta,moves.rep);
                                     });
                                     Navigator.of(ctx).pop();
-                                  }, child: Text('yes')),
+                                  }, child: const Text('yes')),
                                   TextButton(onPressed: () {
                                     Navigator.of(ctx).pop();
-                                  }, child: Text('no')),
+                                  }, child: const Text('no')),
                                 ],
                               ));
                             }
@@ -196,7 +196,7 @@ class _AddWeightState extends State<AddWeight> {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 40,left: 10),
+                  margin: const EdgeInsets.only(bottom: 40,left: 10),
                   child: GestureDetector(child: Image.asset('images/addbutton.png'),onTap: () {
                     if(weight != '' && set != '' && rep != '') {
                       setState(() {
@@ -206,11 +206,11 @@ class _AddWeightState extends State<AddWeight> {
                       });
                     }else {
                       showDialog(context: this.context, builder: (ctx) => AlertDialog(
-                        title: Text("You have to fill in all the blanks."),
+                        title: const Text("You have to fill in all the blanks."),
                         actions: [
                           TextButton(onPressed: (){
                             Navigator.of(ctx).pop();
-                          }, child: Text('Ok')),
+                          }, child: const Text('Ok')),
                         ],
                       ));
                     }
@@ -218,7 +218,7 @@ class _AddWeightState extends State<AddWeight> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 40,left: 20),
+                  margin: const EdgeInsets.only(bottom: 40,left: 20),
                   child: GestureDetector(child: Image.asset('images/savebutton.png'),onTap: () {
 
                     Navigator.push(
